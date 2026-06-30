@@ -1,0 +1,4 @@
+Skill Name,Slug,Category,What It Does,Works Where,Requires,Status,Notes
+A2A Course Brain Processor,a2a-course-brain-processor,Course & Training,Turns raw Fireflies.ai PDF transcripts from Callan's A2A course into structured tagged Markdown knowledge files ready to load into a Claude Project as a searchable Course Brain.,Anywhere,Fireflies.ai PDF transcript + week number,Shared,
+AI Readiness Scorecard,ai-readiness-scorecard,Diagnostics & Assessment,Runs a 60-second 5-question diagnostic that scores a business owner's AI readiness and returns a tier plus one specific next task with 3 steps.,Anywhere,Nothing — works from conversation,Shared,
+EOS Business Coach,eos-business-coach,Strategy & Planning,Converts raw meeting notes transcripts and draft ideas into complete measurable EOS Rocks with scores for clarity achievability and ownership.,Anywhere,Meeting notes or draft Rock ideas,Shared,
