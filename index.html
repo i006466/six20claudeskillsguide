@@ -52,11 +52,11 @@
 <div class="controls">
   <div class="sw">
     <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.5"/><line x1="10.5" y1="10.5" x2="14" y2="14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-    <input type="text" id="q" placeholder="Search skills..." oninput="render()" onkeyup="render()">
+    <input type="text" id="q" placeholder="Search skills..." oninput="window.render()" onkeyup="window.render()">
   </div>
-  <select id="cf" onchange="render()"><option value="">All Categories</option></select>
-  <select id="wf" onchange="render()"><option value="">All Locations</option><option value="anywhere">Anywhere</option><option value="cowork">Cowork Only</option></select>
-  <select id="sf" onchange="render()"><option value="">All Status</option><option value="shared">Shared</option><option value="local">Local</option></select>
+  <select id="cf" onchange="window.render()"><option value="">All Categories</option></select>
+  <select id="wf" onchange="window.render()"><option value="">All Locations</option><option value="anywhere">Anywhere</option><option value="cowork">Cowork Only</option></select>
+  <select id="sf" onchange="window.render()"><option value="">All Status</option><option value="shared">Shared</option><option value="local">Local</option></select>
   <span class="count" id="cnt"></span>
 </div>
 <main id="grid"><div id="empty">No skills match your filters.</div></main>
@@ -64,9 +64,9 @@
 <script>
 var skills = [];
 
-function e(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");}
 
-function split(line){
+function splitLine(line){
   var r=[],c="",q=false;
   for(var i=0;i<line.length;i++){
     var ch=line[i];
@@ -79,20 +79,20 @@ function split(line){
   return r;
 }
 
-function parse(txt){
+function parseCSV(txt){
   var lines=txt.trim().split(/\r?\n/);
   if(lines.length<2)return[];
-  var h=split(lines[0]).map(function(x){return x.trim().toLowerCase().replace(/\s+/g,"_");});
+  var h=splitLine(lines[0]).map(function(x){return x.trim().toLowerCase().replace(/\s+/g,"_");});
   var rows=[];
   for(var i=1;i<lines.length;i++){
-    var v=split(lines[i]),o={};
+    var v=splitLine(lines[i]),o={};
     for(var j=0;j<h.length;j++)o[h[j]]=(v[j]||"").trim();
     if(o.skill_name)rows.push(o);
   }
   return rows;
 }
 
-function match(n,h){
+function smartMatch(n,h){
   if(!n)return true;
   if(h.indexOf(n)!==-1)return true;
   var p=0;
@@ -100,7 +100,7 @@ function match(n,h){
   return true;
 }
 
-function render(){
+window.render = function(){
   var q=document.getElementById("q").value.toLowerCase().trim();
   var cat=document.getElementById("cf").value.toLowerCase();
   var wh=document.getElementById("wf").value.toLowerCase();
@@ -110,7 +110,7 @@ function render(){
   for(var i=0;i<old.length;i++)old[i].remove();
   var f=skills.filter(function(s){
     var h=[s.skill_name,s.slug,s.what_it_does,s.category,s.requires,s.notes].join(" ").toLowerCase();
-    if(q&&!match(q,h))return false;
+    if(q&&!smartMatch(q,h))return false;
     if(cat&&(s.category||"").toLowerCase()!==cat)return false;
     if(wh&&(s.works_where||"").toLowerCase().indexOf(wh)===-1)return false;
     if(st&&(s.status||"").toLowerCase()!==st)return false;
@@ -128,13 +128,13 @@ function render(){
       var wc=wv.toLowerCase().indexOf("cowork")!==-1?"tc":wv.toLowerCase().indexOf("anywhere")!==-1?"ta":"to";
       var sc=(s.status||"").toLowerCase()==="shared"?"ts":"tl";
       var d=document.createElement("div");d.className="card";
-      d.innerHTML='<div class="ct"><div class="sn">'+e(s.skill_name)+'</div>'+(s.category?'<span class="bc">'+e(s.category)+'</span>':'')+'</div>'+(s.what_it_does?'<div class="desc">'+e(s.what_it_does)+'</div>':'')+'<div class="cm"><span class="tag '+wc+'">'+e(wv||"—")+'</span><span class="tag '+sc+'">'+e(s.status||"—")+'</span></div>'+(s.requires?'<div class="req"><strong>Requires:</strong> '+e(s.requires)+'</div>':'')+(s.notes?'<div class="notes">'+e(s.notes)+'</div>':'');
+      d.innerHTML='<div class="ct"><div class="sn">'+esc(s.skill_name)+'</div>'+(s.category?'<span class="bc">'+esc(s.category)+'</span>':'')+'</div>'+(s.what_it_does?'<div class="desc">'+esc(s.what_it_does)+'</div>':'')+'<div class="cm"><span class="tag '+wc+'">'+esc(wv||"—")+'</span><span class="tag '+sc+'">'+esc(s.status||"—")+'</span></div>'+(s.requires?'<div class="req"><strong>Requires:</strong> '+esc(s.requires)+'</div>':'')+(s.notes?'<div class="notes">'+esc(s.notes)+'</div>':'');
       grid.appendChild(d);
     }
   }
-}
+};
 
-function cats(){
+function loadCats(){
   var seen={},arr=[];
   for(var i=0;i<skills.length;i++){var c=skills[i].category;if(c&&!seen[c]){seen[c]=true;arr.push(c);}}
   arr.sort();
@@ -145,10 +145,10 @@ function cats(){
 fetch("data.csv")
   .then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.text();})
   .then(function(t){
-    skills=parse(t);
+    skills=parseCSV(t);
     document.getElementById("status").style.display="none";
-    cats();
-    render();
+    loadCats();
+    window.render();
   })
   .catch(function(err){
     var s=document.getElementById("status");
