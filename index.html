@@ -6,237 +6,155 @@
 <title>Six20 Partners — Skills Directory</title>
 <style>
   :root {
-    --blue:      #00aeef;
-    --navy:      #004a80;
-    --slate:     #434a4f;
-    --white:     #ffffff;
-    --off-white: #f4f6f8;
-    --border:    #dde2e6;
-    --text:      #2b3035;
-    --muted:     #6b747b;
-    --radius:    6px;
-    --font:      'Montserrat', Arial, sans-serif;
+    --blue:#00aeef;--navy:#004a80;--slate:#434a4f;--white:#ffffff;
+    --off-white:#f4f6f8;--border:#dde2e6;--text:#2b3035;--muted:#6b747b;
+    --radius:6px;--font:'Montserrat',Arial,sans-serif;
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: var(--font); background: var(--off-white); color: var(--text); min-height: 100vh; }
-  header { background: var(--navy); padding: 28px 40px 24px; display: flex; align-items: flex-end; gap: 16px; }
-  header h1 { font-size: 1.35rem; font-weight: 700; color: var(--white); letter-spacing: 0.02em; line-height: 1; }
-  header span { font-size: 0.75rem; font-weight: 500; color: var(--blue); letter-spacing: 0.08em; text-transform: uppercase; padding-bottom: 2px; }
-  .controls { background: var(--white); border-bottom: 1px solid var(--border); padding: 16px 40px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-  .search-wrap { position: relative; flex: 1; min-width: 220px; max-width: 400px; }
-  .search-wrap svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
-  input[type="text"] { width: 100%; padding: 9px 12px 9px 38px; border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font); font-size: 0.875rem; color: var(--text); background: var(--off-white); outline: none; transition: border-color 0.15s; }
-  input[type="text"]:focus { border-color: var(--blue); background: var(--white); }
-  select { padding: 9px 32px 9px 12px; border: 1px solid var(--border); border-radius: var(--radius); font-family: var(--font); font-size: 0.875rem; color: var(--text); background: var(--off-white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23434a4f' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center; appearance: none; cursor: pointer; outline: none; }
-  select:focus { border-color: var(--blue); }
-  .count { margin-left: auto; font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
-  #status { font-size: 0.78rem; padding: 10px 40px; color: var(--muted); background: var(--white); border-bottom: 1px solid var(--border); display: none; }
-  #status.error { color: #c0392b; display: block; }
-  #status.loading { display: block; }
-  main { padding: 28px 40px 60px; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
-  .card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; display: flex; flex-direction: column; gap: 10px; transition: box-shadow 0.15s, border-color 0.15s; }
-  .card:hover { border-color: var(--blue); box-shadow: 0 4px 16px rgba(0,174,239,0.10); }
-  .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
-  .skill-name { font-size: 0.95rem; font-weight: 700; color: var(--navy); line-height: 1.3; }
-  .badge-category { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; background: #e8f5fd; color: var(--navy); }
-  .description { font-size: 0.82rem; color: var(--slate); line-height: 1.55; }
-  .card-meta { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 6px; border-top: 1px solid var(--border); }
-  .tag { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; }
-  .tag-anywhere { background: #e8f5e9; color: #2e7d32; }
-  .tag-cowork { background: #fff3e0; color: #e65100; }
-  .tag-other { background: var(--off-white); color: var(--muted); }
-  .tag-shared { background: #e8f5fd; color: var(--navy); }
-  .tag-local { background: #fce4ec; color: #880e4f; }
-  .requires-row { font-size: 0.75rem; color: var(--muted); line-height: 1.4; }
-  .requires-row strong { color: var(--slate); font-weight: 600; }
-  .notes { font-size: 0.76rem; color: var(--muted); font-style: italic; line-height: 1.4; border-top: 1px solid var(--border); padding-top: 8px; }
-  #empty { display: none; grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--muted); font-size: 0.9rem; }
-  @media (max-width: 600px) { header, .controls, main, #status { padding-left: 20px; padding-right: 20px; } main { grid-template-columns: 1fr; } }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font);background:var(--off-white);color:var(--text);min-height:100vh;}
+  header{background:var(--navy);padding:28px 40px 24px;display:flex;align-items:flex-end;gap:16px;}
+  header h1{font-size:1.35rem;font-weight:700;color:var(--white);letter-spacing:.02em;line-height:1;}
+  header span{font-size:.75rem;font-weight:500;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;padding-bottom:2px;}
+  .controls{background:var(--white);border-bottom:1px solid var(--border);padding:16px 40px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+  .sw{position:relative;flex:1;min-width:220px;max-width:400px;}
+  .sw svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;}
+  #q{width:100%;padding:9px 12px 9px 38px;border:1px solid var(--border);border-radius:var(--radius);font-family:var(--font);font-size:.875rem;color:var(--text);background:var(--off-white);outline:none;}
+  #q:focus{border-color:var(--blue);background:var(--white);}
+  select{padding:9px 32px 9px 12px;border:1px solid var(--border);border-radius:var(--radius);font-family:var(--font);font-size:.875rem;color:var(--text);background:var(--off-white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23434a4f' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;appearance:none;cursor:pointer;outline:none;}
+  .count{margin-left:auto;font-size:.8rem;color:var(--muted);white-space:nowrap;}
+  #status{font-size:.78rem;padding:10px 40px;color:var(--muted);background:var(--white);border-bottom:1px solid var(--border);display:none;}
+  #status.e{color:#c0392b;display:block;}
+  #status.l{display:block;}
+  main{padding:28px 40px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;display:flex;flex-direction:column;gap:10px;transition:box-shadow .15s,border-color .15s;}
+  .card:hover{border-color:var(--blue);box-shadow:0 4px 16px rgba(0,174,239,.10);}
+  .ct{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+  .sn{font-size:.95rem;font-weight:700;color:var(--navy);line-height:1.3;}
+  .bc{font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0;background:#e8f5fd;color:var(--navy);}
+  .desc{font-size:.82rem;color:var(--slate);line-height:1.55;}
+  .cm{display:flex;gap:8px;flex-wrap:wrap;padding-top:6px;border-top:1px solid var(--border);}
+  .tag{font-size:.7rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:4px;}
+  .ta{background:#e8f5e9;color:#2e7d32;}
+  .tc{background:#fff3e0;color:#e65100;}
+  .to{background:var(--off-white);color:var(--muted);}
+  .ts{background:#e8f5fd;color:var(--navy);}
+  .tl{background:#fce4ec;color:#880e4f;}
+  .req{font-size:.75rem;color:var(--muted);line-height:1.4;}
+  .req strong{color:var(--slate);font-weight:600;}
+  .notes{font-size:.76rem;color:var(--muted);font-style:italic;line-height:1.4;border-top:1px solid var(--border);padding-top:8px;}
+  #empty{display:none;grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted);font-size:.9rem;}
+  @media(max-width:600px){header,.controls,main,#status{padding-left:20px;padding-right:20px;}main{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
-
-<header>
-  <h1>Skills Directory</h1>
-  <span>Six20 Partners</span>
-</header>
-
-<div id="status" class="loading">Loading skills...</div>
-
+<header><h1>Skills Directory</h1><span>Six20 Partners</span></header>
+<div id="status" class="l">Loading skills...</div>
 <div class="controls">
-  <div class="search-wrap">
-    <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-      <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.5"/>
-      <line x1="10.5" y1="10.5" x2="14" y2="14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-    </svg>
-    <input type="text" id="search" placeholder="Search skills..." autocomplete="off">
+  <div class="sw">
+    <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.5"/><line x1="10.5" y1="10.5" x2="14" y2="14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    <input type="text" id="q" placeholder="Search skills..." oninput="render()" onkeyup="render()">
   </div>
-  <select id="cat-filter"><option value="">All Categories</option></select>
-  <select id="where-filter">
-    <option value="">All Locations</option>
-    <option value="anywhere">Anywhere</option>
-    <option value="cowork">Cowork Only</option>
-  </select>
-  <select id="status-filter">
-    <option value="">All Status</option>
-    <option value="shared">Shared</option>
-    <option value="local">Local</option>
-  </select>
-  <span class="count" id="count"></span>
+  <select id="cf" onchange="render()"><option value="">All Categories</option></select>
+  <select id="wf" onchange="render()"><option value="">All Locations</option><option value="anywhere">Anywhere</option><option value="cowork">Cowork Only</option></select>
+  <select id="sf" onchange="render()"><option value="">All Status</option><option value="shared">Shared</option><option value="local">Local</option></select>
+  <span class="count" id="cnt"></span>
 </div>
-
-<main id="grid">
-  <div id="empty">No skills match your filters.</div>
-</main>
+<main id="grid"><div id="empty">No skills match your filters.</div></main>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+var skills = [];
 
-  var grid         = document.getElementById("grid");
-  var emptyMsg     = document.getElementById("empty");
-  var countEl      = document.getElementById("count");
-  var statusEl     = document.getElementById("status");
-  var searchEl     = document.getElementById("search");
-  var catFilter    = document.getElementById("cat-filter");
-  var whereFilter  = document.getElementById("where-filter");
-  var statusFilter = document.getElementById("status-filter");
-  var allSkills    = [];
+function e(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");}
 
-  function splitLine(line) {
-    var result = [], cur = "", inQ = false;
-    for (var i = 0; i < line.length; i++) {
-      var ch = line[i];
-      if (ch === '"' && !inQ) { inQ = true; continue; }
-      if (ch === '"' && inQ)  { inQ = false; continue; }
-      if (ch === ',' && !inQ) { result.push(cur); cur = ""; continue; }
-      cur += ch;
-    }
-    result.push(cur);
-    return result;
+function split(line){
+  var r=[],c="",q=false;
+  for(var i=0;i<line.length;i++){
+    var ch=line[i];
+    if(ch==='"'&&!q){q=true;continue;}
+    if(ch==='"'&&q){q=false;continue;}
+    if(ch===','&&!q){r.push(c);c="";continue;}
+    c+=ch;
   }
+  r.push(c);
+  return r;
+}
 
-  function parseCSV(text) {
-    var lines = text.trim().split(/\r?\n/);
-    if (lines.length < 2) return [];
-    var headers = splitLine(lines[0]).map(function(h) {
-      return h.trim().toLowerCase().replace(/\s+/g, "_");
-    });
-    var rows = [];
-    for (var i = 1; i < lines.length; i++) {
-      var vals = splitLine(lines[i]);
-      var obj = {};
-      for (var j = 0; j < headers.length; j++) {
-        obj[headers[j]] = (vals[j] || "").trim();
-      }
-      if (obj.skill_name) rows.push(obj);
-    }
-    return rows;
+function parse(txt){
+  var lines=txt.trim().split(/\r?\n/);
+  if(lines.length<2)return[];
+  var h=split(lines[0]).map(function(x){return x.trim().toLowerCase().replace(/\s+/g,"_");});
+  var rows=[];
+  for(var i=1;i<lines.length;i++){
+    var v=split(lines[i]),o={};
+    for(var j=0;j<h.length;j++)o[h[j]]=(v[j]||"").trim();
+    if(o.skill_name)rows.push(o);
   }
+  return rows;
+}
 
-  function smartMatch(needle, haystack) {
-    if (!needle) return true;
-    if (haystack.indexOf(needle) !== -1) return true;
-    var hi = 0;
-    for (var ni = 0; ni < needle.length; ni++) {
-      var found = haystack.indexOf(needle[ni], hi);
-      if (found === -1) return false;
-      hi = found + 1;
-    }
+function match(n,h){
+  if(!n)return true;
+  if(h.indexOf(n)!==-1)return true;
+  var p=0;
+  for(var i=0;i<n.length;i++){var f=h.indexOf(n[i],p);if(f===-1)return false;p=f+1;}
+  return true;
+}
+
+function render(){
+  var q=document.getElementById("q").value.toLowerCase().trim();
+  var cat=document.getElementById("cf").value.toLowerCase();
+  var wh=document.getElementById("wf").value.toLowerCase();
+  var st=document.getElementById("sf").value.toLowerCase();
+  var grid=document.getElementById("grid");
+  var old=grid.querySelectorAll(".card");
+  for(var i=0;i<old.length;i++)old[i].remove();
+  var f=skills.filter(function(s){
+    var h=[s.skill_name,s.slug,s.what_it_does,s.category,s.requires,s.notes].join(" ").toLowerCase();
+    if(q&&!match(q,h))return false;
+    if(cat&&(s.category||"").toLowerCase()!==cat)return false;
+    if(wh&&(s.works_where||"").toLowerCase().indexOf(wh)===-1)return false;
+    if(st&&(s.status||"").toLowerCase()!==st)return false;
     return true;
-  }
-
-  function esc(str) {
-    return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
-  }
-
-  function render() {
-    var q     = searchEl.value.toLowerCase().trim();
-    var cat   = catFilter.value.toLowerCase();
-    var where = whereFilter.value.toLowerCase();
-    var stat  = statusFilter.value.toLowerCase();
-
-    var filtered = allSkills.filter(function(s) {
-      var hay = [s.skill_name, s.slug, s.what_it_does, s.category, s.requires, s.notes].join(" ").toLowerCase();
-      if (q     && !smartMatch(q, hay)) return false;
-      if (cat   && (s.category || "").toLowerCase() !== cat) return false;
-      if (where && (s.works_where || "").toLowerCase().indexOf(where) === -1) return false;
-      if (stat  && (s.status || "").toLowerCase() !== stat) return false;
-      return true;
-    });
-
-    var cards = grid.querySelectorAll(".card");
-    for (var i = 0; i < cards.length; i++) cards[i].remove();
-
-    if (filtered.length === 0) {
-      emptyMsg.style.display = "block";
-      countEl.textContent = "0 skills";
-    } else {
-      emptyMsg.style.display = "none";
-      for (var i = 0; i < filtered.length; i++) grid.appendChild(buildCard(filtered[i]));
-      countEl.textContent = filtered.length + " skill" + (filtered.length !== 1 ? "s" : "");
+  });
+  var em=document.getElementById("empty");
+  var cnt=document.getElementById("cnt");
+  if(f.length===0){em.style.display="block";cnt.textContent="0 skills";}
+  else{
+    em.style.display="none";
+    cnt.textContent=f.length+" skill"+(f.length!==1?"s":"");
+    for(var i=0;i<f.length;i++){
+      var s=f[i];
+      var wv=s.works_where||"";
+      var wc=wv.toLowerCase().indexOf("cowork")!==-1?"tc":wv.toLowerCase().indexOf("anywhere")!==-1?"ta":"to";
+      var sc=(s.status||"").toLowerCase()==="shared"?"ts":"tl";
+      var d=document.createElement("div");d.className="card";
+      d.innerHTML='<div class="ct"><div class="sn">'+e(s.skill_name)+'</div>'+(s.category?'<span class="bc">'+e(s.category)+'</span>':'')+'</div>'+(s.what_it_does?'<div class="desc">'+e(s.what_it_does)+'</div>':'')+'<div class="cm"><span class="tag '+wc+'">'+e(wv||"—")+'</span><span class="tag '+sc+'">'+e(s.status||"—")+'</span></div>'+(s.requires?'<div class="req"><strong>Requires:</strong> '+e(s.requires)+'</div>':'')+(s.notes?'<div class="notes">'+e(s.notes)+'</div>':'');
+      grid.appendChild(d);
     }
   }
+}
 
-  function buildCard(s) {
-    var card = document.createElement("div");
-    card.className = "card";
-    var whereVal = s.works_where || "";
-    var whereClass = whereVal.toLowerCase().indexOf("cowork") !== -1 ? "tag-cowork"
-                   : whereVal.toLowerCase().indexOf("anywhere") !== -1 ? "tag-anywhere" : "tag-other";
-    var statClass = (s.status || "").toLowerCase() === "shared" ? "tag-shared" : "tag-local";
-    card.innerHTML =
-      '<div class="card-top">' +
-        '<div class="skill-name">' + esc(s.skill_name) + '</div>' +
-        (s.category ? '<span class="badge-category">' + esc(s.category) + '</span>' : '') +
-      '</div>' +
-      (s.what_it_does ? '<div class="description">' + esc(s.what_it_does) + '</div>' : '') +
-      '<div class="card-meta">' +
-        '<span class="tag ' + whereClass + '">' + esc(whereVal || "—") + '</span>' +
-        '<span class="tag ' + statClass + '">' + esc(s.status || "—") + '</span>' +
-      '</div>' +
-      (s.requires ? '<div class="requires-row"><strong>Requires:</strong> ' + esc(s.requires) + '</div>' : '') +
-      (s.notes ? '<div class="notes">' + esc(s.notes) + '</div>' : '');
-    return card;
-  }
+function cats(){
+  var seen={},arr=[];
+  for(var i=0;i<skills.length;i++){var c=skills[i].category;if(c&&!seen[c]){seen[c]=true;arr.push(c);}}
+  arr.sort();
+  var cf=document.getElementById("cf");
+  for(var i=0;i<arr.length;i++){var o=document.createElement("option");o.value=arr[i].toLowerCase();o.textContent=arr[i];cf.appendChild(o);}
+}
 
-  function populateCategories() {
-    var seen = {}, cats = [];
-    for (var i = 0; i < allSkills.length; i++) {
-      var c = allSkills[i].category;
-      if (c && !seen[c]) { seen[c] = true; cats.push(c); }
-    }
-    cats.sort();
-    for (var i = 0; i < cats.length; i++) {
-      var opt = document.createElement("option");
-      opt.value = cats[i].toLowerCase();
-      opt.textContent = cats[i];
-      catFilter.appendChild(opt);
-    }
-  }
-
-  fetch("data.csv")
-    .then(function(res) {
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      return res.text();
-    })
-    .then(function(text) {
-      allSkills = parseCSV(text);
-      statusEl.style.display = "none";
-      populateCategories();
-      render();
-    })
-    .catch(function(e) {
-      statusEl.className = "error";
-      statusEl.textContent = "Could not load data.csv. Make sure it is deployed alongside this file. (" + e.message + ")";
-    });
-
-  searchEl.addEventListener("input", render);
-  searchEl.addEventListener("keyup", render);
-  catFilter.addEventListener("change", render);
-  whereFilter.addEventListener("change", render);
-  statusFilter.addEventListener("change", render);
-
-});
+fetch("data.csv")
+  .then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.text();})
+  .then(function(t){
+    skills=parse(t);
+    document.getElementById("status").style.display="none";
+    cats();
+    render();
+  })
+  .catch(function(err){
+    var s=document.getElementById("status");
+    s.className="e";
+    s.textContent="Could not load data.csv. ("+err.message+")";
+  });
 </script>
 </body>
 </html>
